@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+Courses
+
+{% if is_teacher %}
+<a href="{% url 'createcourse' %}">Create Course</a>
+{% endif %}
+
+<br>
+
+<a href="{% url 'joincourse' %}">Join Course</a>
+
+<br>
+
+<h1>Enrolled Courses</h1>
+<ul>
+    {% for course in enrolled_courses %}
+    <li>
+        <a href="{% url 'coursehome' course.id %}">
+            {{course.name}}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+<br>
+
+{% if is_teacher %}
+
+<h1>Taught Courses</h1>
+<ul>
+    {% for course in taught_courses %}
+    <li>
+        <a href="{% url 'coursehome' course.id %}">
+            {{course.name}}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endif %}
+
+{% endblock %}

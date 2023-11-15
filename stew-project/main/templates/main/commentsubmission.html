@@ -1,0 +1,34 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1>Submit Comment</h1>
+
+<h2>{{ error }}</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <p>
+        <label for="id_content">Comment Content:</label>
+        <textarea name="content" cols="40" rows="10" maxlength="5000" id="id_content"></textarea>   
+    </p>
+    
+    <p>
+        <label for="id_attached">Attachment:</label>
+        <input type="file" name="attached" id="id_attached"> 
+    </p>
+
+    <p>
+        <label for="id_visible">Comment Visible:</label>
+        <input type="checkbox" name="visible" checked="True" id="id_visible">
+
+    </p>
+
+
+    <button type="submit">Save</button>
+</form>
+
+
+
+{% endblock %}

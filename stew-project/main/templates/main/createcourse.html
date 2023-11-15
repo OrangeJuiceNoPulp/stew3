@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1> Create Course </h1>
+
+<h2>{{ error }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+<p>
+    <label for="id_coursename">Course Name:</label>
+    <input type="text" name="name" autofocus autocapitalize="none" autocomplete="course name" maxlength="100" required id="id_coursename">
+</p>
+<p>
+    <label for="id_coursecode">Course Code:</label>
+    <input type="text" name="join_code" maxlength="100" required id="id_coursecode">
+</p>
+
+<p>
+    <label for="id_students_can_make_teams">Students are allowed to create Teams:</label>
+    <input type="checkbox" name="students_can_make_teams" id="id_students_can_make_teams">
+
+</p>
+
+<button type="submit">Create</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h2>{{ error }}</h2>
+
+{% if userprofile.profile_picture %}
+<img src="{{userprofile.profile_picture.url}}">
+{% endif %}
+
+<h1>{{ userprofile.first_name }} {{ userprofile.last_name }}</h1>
+
+<h2>Email: {{ userprofile.email }}</h2>
+
+<h3>About Me:</h3>
+<p>{{ userprofile.description }}</p>
+
+
+{% if request.user == userprofile %}
+    <a href="{% url 'edituserprofile'  userprofile.id %}">
+        Edit Profile
+    </a>    
+{% endif %}
+
+
+{% endblock %}

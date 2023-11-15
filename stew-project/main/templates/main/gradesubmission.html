@@ -1,0 +1,82 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1>Task Submission</h1>
+
+{% if submission.team %}
+<h2>Team: {{submission.team.name}} </h2>
+{% endif %}
+
+<h3>Submitted by: {{submission.submitter.first_name}} {{submission.submitter.last_name}}</h3>
+
+<p>{{ submission.description }}</p>
+
+<br>
+
+{% if submission.attached %}
+Attachment: <a href="{% url 'downloadsubmissionattachment' submission.id %}" download>{{submission.attached.name}}</a>
+{% endif %}
+
+
+{% if submission.is_graded %}
+<p>
+Previous Grade: {{submission.grade}}
+</p>
+<p>
+Previous Grader: {{submission.grader.first_name}} {{submission.grader.last_name}}
+</p>
+<p>
+Previous Comments: {{submission.grading_comments}}
+</p>
+
+{% if submission.grading_attached %}
+    <p>
+    Previous Attachment: <a href="{% url 'downloadgradingattachment' submission.id %}" download>{{submission.grading_attached.name}}</a>
+    </p>
+{% endif %}
+
+{% endif %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+
+    <p>
+        <label for="id_grade">Grade:</label>
+        {% if submission.is_graded %}
+            <input type="number" value="{{submission.grade}}" name="grade" step="any" id="id_grade"> 
+        {% else %}
+            <input type="number" value="100.0" name="grade" step="any" id="id_grade">
+        {% endif %}  
+    </p>
+    
+    <p>
+        <label for="id_grading_attached">Grading Attachment:</label>
+        <input type="file" name="grading_attached" id="id_grading_attached"> 
+    </p>
+
+    <p>
+        <label for="id_grading_comments">Description:</label>
+        {% if submission.is_graded %}
+            <textarea name="grading_comments" cols="40" rows="10" maxlength="5000" id="id_grading_comments">{{submission.grading_comments}}</textarea>
+        {% else %}
+            <textarea name="grading_comments" cols="40" rows="10" maxlength="5000" id="id_grading_comments"></textarea>
+        {% endif %}  
+
+    </p>
+
+    <p>
+        <label for="id_grade_visible">Grade Visible:</label>
+        {% if submission.grade_visible %}
+            <input type="checkbox" name="grade_visible" checked="True" id="id_grade_visible">
+        {% else %}
+            <input type="checkbox" name="grade_visible" id="id_grade_visible">
+        {% endif %}  
+
+    </p>
+
+    <button type="submit">Save</button>
+</form>
+
+{% endblock %}

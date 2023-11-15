@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1>Edit Meeting</h1>
+
+<h2>{{ error }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <p>
+        <label for="id_link">Link:</label>
+        <input type="url" name="link" maxlength="300" value="{{meeting.link}}" required="" id="id_link">
+    </p>
+
+    <p>
+        <label for="id_memo">Memo:</label>
+        <textarea name="memo" cols="40" rows="10" maxlength="500" id="id_memo">{{meeting.memo}}</textarea>
+    </p>
+
+    <p>
+        <label for="id_meeting_time">Meeting Time:</label>
+        <input type="datetime-local" name="meeting_time" value="{{meeting.meeting_time|date:'Y-m-d'}}T{{meeting.meeting_time|date:'H:i'}}" required="" id="id_meeting_time">
+    </p>
+
+
+    <p>
+        <label for="id_completed">Status:</label>
+        <select  name="is_complete" required="" id="id_completed">
+            {% if meeting.is_complete %}
+            <option value="False" > Not Completed</option>
+            <option value="True" selected="selected"> Completed</option>
+            {% else %}
+            <option value="False" selected="selected"> Not Completed</option>
+            <option value="True"> Completed</option>
+            {% endif %}
+        </select>
+    </p>
+
+<button type="submit">Save</button>
+</form>
+
+
+
+{% endblock %}

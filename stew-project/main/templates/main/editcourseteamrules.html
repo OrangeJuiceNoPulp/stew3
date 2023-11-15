@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1> Allow Students To Create Teams?</h1>
+
+<h2>{{ error }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+<p>
+    <label for="id_students_can_make_teams">Students are allowed to create teams:</label>
+
+    {% if course.students_can_make_teams %}
+        <input type="checkbox" name="students_can_make_teams" checked="True" id="id_students_can_make_teams">
+    {% else %}
+        <input type="checkbox" name="students_can_make_teams" id="id_students_can_make_teams">
+    {% endif %}  
+
+</p>
+
+
+
+<button type="submit">Confirm</button>
+</form>
+
+{% endblock %}

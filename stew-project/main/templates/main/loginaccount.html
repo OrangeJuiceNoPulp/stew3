@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1> Login </h1>
+
+<h2>{{ error }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+<p>
+    <label for="id_username">Username:</label>
+    <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
+
+</p>
+<p>
+    <label for="id_password">Password:</label>
+    <input type="password" name="password" autocomplete="current-password" maxlength="150" required id="id_password">
+
+</p>
+
+<button type="submit">Login</button>
+</form>
+
+<p>
+    <a href="{% url 'signupaccount' %}">Don't have an account? Sign up.</a>
+</p>
+
+{% endblock %}

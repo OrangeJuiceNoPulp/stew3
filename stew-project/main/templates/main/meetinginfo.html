@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1>Meeting</h1>
+
+<h2>Course: 
+    <a href="{% url 'coursehome' meeting.meeting_course.id %}">
+        {{meeting.meeting_course.name}}
+    </a>
+</h2>
+
+{% if meeting.meeting_team %}
+<h3>Team: 
+    <a href="{% url 'teamhome' meeting.meeting_team.id %}">
+        {{meeting.meeting_team.name}}
+    </a>
+</h3>
+{% endif %}
+
+<h2>Meeting Host: 
+    <a href="{% url 'userprofile' meeting.meeting_host.id %}">
+        {{meeting.meeting_host.first_name}} {{meeting.meeting_host.last_name}}
+    </a>
+</h2>
+
+<h2>Meeting Link: 
+    <a href="{{ meeting.link }}">
+        {{ meeting.link }}
+    </a>
+</h2>
+
+<h3>Memo:</h3> 
+    <p>
+        {{ meeting.memo }}
+    </p>
+
+{% if request.user.id == meeting.meeting_host.id %}
+    <a href="{% url 'editmeeting' meeting.id %}">
+        Edit Meeting
+    </a>
+{% endif %}
+
+{% endblock %}

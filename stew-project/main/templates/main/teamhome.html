@@ -1,0 +1,90 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h2>{{ error }}</h2>
+
+<h2>Course: 
+    <a href="{% url 'coursehome' team.course.id %}">
+        {{team.course.name}}
+    </a>
+</h2>
+
+{% if team.parent_team %}
+<h3>Parent Team: 
+    <a href="{% url 'teamhome' team.parent_team.id %}">
+        {{team.parent_team.name}}
+    </a>
+</h3>
+{% endif %}
+
+<h1>{{ team.name }}</h1>
+
+<h3>Team Code: {{team.join_code}} </h3>
+<p>Share this code with other members so that they can join.</p>
+
+
+<h3>Meetings</h3>
+
+<ul>
+    {% for meeting in meetings.all %}
+    <li>
+        <a href="{% url 'meetinginfo' meeting.id %}">
+            Meeting on {{meeting.meeting_time}}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% if completed_meetings %}
+<form action="{% url 'teamhome' team.id %}">
+    <input type="hidden" name="display_completed_meetings" value="False">
+    <input type="submit" value="Hide Completed Meetings">
+</form>
+{% else %}
+<form action="{% url 'teamhome' team.id %}">
+    <input type="hidden" name="display_completed_meetings" value="True">
+    <input type="submit" value="Display Completed Meetings">
+</form>
+{% endif %}
+
+<a href="{% url 'addmeeting' team.course.id team.id %}">Add Meeting</a>
+
+
+<h3>Tasks</h3>
+
+<ul>
+    {% for task in tasks.all %}
+    <li>
+        <a href="{% url 'viewtask' task.id %}">
+            {{task.name}}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'assigntask' team.course.id team.id %}">Assign Task</a>
+
+
+<h3>Teams</h3>
+
+<ul>
+    {% for subteam in subteams.all %}
+    <li>
+        <a href="{% url 'teamhome' subteam.id %}">
+            {{subteam.name}}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'createteam' team.course.id team.id %}">Create Team</a> <a href="{% url 'jointeam' %}">Join Team</a>
+
+
+<br>
+
+
+
+
+
+{% endblock %}

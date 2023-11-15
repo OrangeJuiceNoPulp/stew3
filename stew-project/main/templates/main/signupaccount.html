@@ -1,0 +1,59 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1> Signup </h1>
+
+<h2>{{ error }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+<p>
+    <label for="id_username">Username:</label>
+    <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
+</p>
+<p>
+    <label for="id_email">Email:</label>
+    <input type="email" name="email" autocapitalize="none" autocomplete="username" maxlength="150" required id="id_email">
+</p>
+
+<p>
+    <label for="id_fname">First Name:</label>
+    <input type="text" name="first_name" autocapitalize="none" autocomplete="username" maxlength="150" required id="id_fname">
+</p>
+<p>
+    <label for="id_lname">Last Name:</label>
+    <input type="text" name="last_name" autocapitalize="none" autocomplete="username" maxlength="150" required id="id_lname">
+</p>
+
+<p>
+    <label for="id_password1">Password:</label>
+    <input
+        type="password"
+        name="password1"
+        autocomplete="current-password"
+        maxlength="150"
+        required
+        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+        oninvalid="this.setCustomValidity('Password must contain at least one digit, one lowercase letter, one uppercase letter, and be at least 8 characters long')"
+        oninput="this.setCustomValidity('')"
+        id="id_password1"
+    >
+</p>
+<p>
+    <label for="id_password2">Confirm Password:</label>
+    <input type="password" name="password2" autocomplete="current-password" maxlength="150" required id="id_password2">
+</p>
+<p>
+    <label for="id_my_role">I am a(n) </label>
+    <select  name="my_role" required id="id_my_role">
+        <option value="student" selected="selected">Student</option>
+        <option value="instructor">Instructor</option>
+    </select>
+</p>
+
+<button type="submit">Sign Up</button>
+</form>
+
+{% endblock %}

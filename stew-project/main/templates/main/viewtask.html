@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1>Task</h1>
+
+<h2>{{ error }}</h2>
+
+<h2>{{ task.name }}</h2>
+
+<p>{{ task.description }}</p>
+
+{% if task.attached %}
+Attachment: <a href="{% url 'downloadtaskattachment' task.id %}" download>{{task.attached.name}}</a>
+{% endif %}
+
+<br>
+
+{% if task.task_level == null and task.course.instructor.id == request.user.id %}
+<a href="{% url 'edittask' task.id %}">
+    Edit Task
+</a>
+{% endif %}
+{% if task.task_level != null %}
+<a href="{% url 'edittask' task.id %}">
+    Edit Task
+</a>
+{% endif %}
+
+<h3>Task Submissions:</h3>
+
+<ul>
+    {% for submission in submissions.all %}
+    <li>
+        <a href="{% url 'viewsubmission' submission.id %}">
+            {% if submission.team %}
+            {{submission.team.name}}: {{submission.submitter.first_name}} {{submission.submitter.last_name}}
+            {% else %}
+            {{submission.submitter.first_name}} {{submission.submitter.last_name}}
+            {% endif %}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'addtasksubmission' task.id %}">
+    Add Submission
+</a>
+
+
+{% endblock %}

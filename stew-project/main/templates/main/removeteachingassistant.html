@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1>Remove Teaching Assistant</h1>
+
+<h2>{{ error }}</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+
+    <p>
+        <label for="id_ta">Teaching Assistant:</label>
+
+        <select name="student_id" required="" id="id_ta">
+            {% for ta in tas.all %}
+            <option value={{ta.id}}>{{ta.first_name}} {{ta.last_name}}</option>
+            {% endfor %}
+
+        </select>
+    </p>
+
+    <button type="submit">Save</button>
+</form>
+
+{% endblock %}

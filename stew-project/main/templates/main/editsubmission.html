@@ -1,0 +1,40 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1>Task Submission</h1>
+
+{% if submission.team %}
+<h2>Team: {{submission.team.name}} </h2>
+{% endif %}
+
+<h3>Originally Submitted by: {{submission.submitter.first_name}} {{submission.submitter.last_name}}</h3>
+
+<p>Original Text: {{ submission.description }}</p>
+
+<br>
+
+{% if submission.attached %}
+Original Attachment: <a href="{% url 'downloadsubmissionattachment' submission.id %}" download>{{submission.attached.name}}</a>
+{% endif %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <p>
+        <label for="id_attached">New Attachment:</label>
+        <input type="file" name="attached" id="id_attached"> 
+    </p>
+
+    <p>
+        <label for="id_description">Description:</label>
+
+        <textarea name="description" cols="40" rows="10" maxlength="5000" id="id_description">{{submission.description}}</textarea>
+ 
+
+    </p>
+    
+    <button type="submit">Save</button>
+</form>
+
+{% endblock %}

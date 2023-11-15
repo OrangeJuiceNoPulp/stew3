@@ -1,0 +1,55 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1>Edit Task</h1>
+
+<h2>{{ error }}</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <p>
+        <label for="id_name">Name:</label>
+        <input type="text" name="name" value="{{task.name}}" maxlength="100" required="" id="id_name">    
+    </p>
+
+    <p>
+        <label for="id_description">Description:</label>
+        <textarea name="description" cols="40" rows="10" maxlength="5000" id="id_description">{{task.description}}</textarea>   
+    </p>
+    
+    <p>
+        <label for="id_attached">New Attachment (Will overide the old attachment):</label>
+        <input type="file" name="attached" id="id_attached"> 
+    </p>
+
+    <p>
+        Previous Attachment: <a href="{% url 'downloadtaskattachment' task.id %}" download>{{task.attached.name}}</a>
+    </p>
+
+    <p>
+        <label for="id_due_date">Due Date:</label>
+        <input type="datetime-local" name="due_date" value="{{task.due_date|date:'Y-m-d'}}T{{task.due_date|date:'H:i'}}" id="id_due_date">
+    </p>
+
+    <p>
+        <label for="id_is_team_task">Is team task:</label>
+        <select name="is_team_task" id="id_is_team_task"> 
+            {% if task.is_team_task %}
+            <option value="True" selected="selected">Team Task</option>
+            <option value="False">Individual Task</option>
+            {% else %}
+            <option value="True">Team Task</option>
+            <option value="False" selected="selected">Individual Task</option>
+            {% endif %}
+        </select>
+
+    </p>
+
+    <button type="submit">Save</button>
+</form>
+
+
+
+{% endblock %}
