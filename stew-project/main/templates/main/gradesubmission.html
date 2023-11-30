@@ -2,81 +2,127 @@
 
 {% block content %}
 
-<h1>Task Submission</h1>
+<div class="task-submission-container">
+    <h1>Task Submission</h1>
 
-{% if submission.team %}
-<h2>Team: {{submission.team.name}} </h2>
-{% endif %}
+    {% if submission.team %}
+        <h2>Team: {{ submission.team.name }}</h2>
+    {% endif %}
 
-<h3>Submitted by: {{submission.submitter.first_name}} {{submission.submitter.last_name}}</h3>
+    <h3>Submitted by: {{ submission.submitter.first_name }} {{ submission.submitter.last_name }}</h3>
 
-<p>{{ submission.description }}</p>
+    <p>{{ submission.description }}</p>
 
-<br>
+    <br>
 
-{% if submission.attached %}
-Attachment: <a href="{% url 'downloadsubmissionattachment' submission.id %}" download>{{submission.attached.name}}</a>
-{% endif %}
+    {% if submission.attached %}
+        <p>Attachment: <a href="{% url 'downloadsubmissionattachment' submission.id %}" download>{{ submission.attached.name }}</a></p>
+    {% endif %}
 
+    {% if submission.is_graded %}
+        <div class="previous-grade-info">
+            <p>Previous Grade: {{ submission.grade }}</p>
+            <p>Previous Grader: {{ submission.grader.first_name }} {{ submission.grader.last_name }}</p>
+            <p>Previous Comments: {{ submission.grading_comments }}</p>
 
-{% if submission.is_graded %}
-<p>
-Previous Grade: {{submission.grade}}
-</p>
-<p>
-Previous Grader: {{submission.grader.first_name}} {{submission.grader.last_name}}
-</p>
-<p>
-Previous Comments: {{submission.grading_comments}}
-</p>
+            {% if submission.grading_attached %}
+                <p>Previous Attachment: <a href="{% url 'downloadgradingattachment' submission.id %}" download>{{ submission.grading_attached.name }}</a></p>
+            {% endif %}
+        </div>
+    {% endif %}
 
-{% if submission.grading_attached %}
-    <p>
-    Previous Attachment: <a href="{% url 'downloadgradingattachment' submission.id %}" download>{{submission.grading_attached.name}}</a>
-    </p>
-{% endif %}
+    <form method="POST" enctype="multipart/form-data" class="grading-form">
+        {% csrf_token %}
 
-{% endif %}
+        <div class="form-group">
+            <label for="id_grade">Grade:</label>
+            {% if submission.is_graded %}
+                <input type="number" value="{{ submission.grade }}" name="grade" step="any" id="id_grade">
+            {% else %}
+                <input type="number" value="100.0" name="grade" step="any" id="id_grade">
+            {% endif %}
+        </div>
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
+        <div class="form-group">
+            <label for="id_grading_attached">Grading Attachment:</label>
+            <input type="file" name="grading_attached" id="id_grading_attached">
+        </div>
 
+        <div class="form-group">
+            <label for="id_grading_comments">Comments:</label>
+            {% if submission.is_graded %}
+                <textarea name="grading_comments" cols="40" rows="10" maxlength="5000" id="id_grading_comments">{{ submission.grading_comments }}</textarea>
+            {% else %}
+                <textarea name="grading_comments" cols="40" rows="10" maxlength="5000" id="id_grading_comments"></textarea>
+            {% endif %}
+        </div>
 
-    <p>
-        <label for="id_grade">Grade:</label>
-        {% if submission.is_graded %}
-            <input type="number" value="{{submission.grade}}" name="grade" step="any" id="id_grade"> 
-        {% else %}
-            <input type="number" value="100.0" name="grade" step="any" id="id_grade">
-        {% endif %}  
-    </p>
-    
-    <p>
-        <label for="id_grading_attached">Grading Attachment:</label>
-        <input type="file" name="grading_attached" id="id_grading_attached"> 
-    </p>
+        <div class="form-group">
+            <label for="id_grade_visible">Grade Visible:</label>
+            {% if submission.grade_visible %}
+                <input type="checkbox" name="grade_visible" checked="True" id="id_grade_visible">
+            {% else %}
+                <input type="checkbox" name="grade_visible" id="id_grade_visible">
+            {% endif %}
+        </div>
 
-    <p>
-        <label for="id_grading_comments">Description:</label>
-        {% if submission.is_graded %}
-            <textarea name="grading_comments" cols="40" rows="10" maxlength="5000" id="id_grading_comments">{{submission.grading_comments}}</textarea>
-        {% else %}
-            <textarea name="grading_comments" cols="40" rows="10" maxlength="5000" id="id_grading_comments"></textarea>
-        {% endif %}  
+        <button type="submit">Save</button>
+    </form>
+</div>
 
-    </p>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
 
-    <p>
-        <label for="id_grade_visible">Grade Visible:</label>
-        {% if submission.grade_visible %}
-            <input type="checkbox" name="grade_visible" checked="True" id="id_grade_visible">
-        {% else %}
-            <input type="checkbox" name="grade_visible" id="id_grade_visible">
-        {% endif %}  
+    .task-submission-container {
+        max-width: 800px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-    </p>
+    h1, h2, h3 {
+        color: #333;
+    }
 
-    <button type="submit">Save</button>
-</form>
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        color: #555;
+    }
+
+    input, textarea, select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        background-color: #3498db;
+        color: #fff;
+        padding: 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #2980b9;
+    }
+</style>
 
 {% endblock %}

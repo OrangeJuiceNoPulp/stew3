@@ -2,19 +2,80 @@
 
 {% block content %}
 
-<h1> Join Team </h1>
+<div class="join-team-container">
+    <h1>Join Team</h1>
 
-<h2>{{ error }}</h2>
+    <h2>{{ error }}</h2>
 
-<form method="POST">
-    {% csrf_token %}
+    <form method="POST" class="join-team-form">
+        {% csrf_token %}
 
-<p>
-    <label for="id_teamcode">Team Code:</label>
-    <input type="text" name="join_code" maxlength="100" required id="id_teamcode">
-</p>
+        <div class="form-group">
+            <label for="id_teamcode">Team Code:</label>
+            <input type="text" name="join_code" maxlength="100" required id="id_teamcode">
+        </div>
 
-<button type="submit">Join</button>
-</form>
+        <button type="submit">Join</button>
+    </form>
+</div>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .join-team-container {
+        max-width: 400px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2 {
+        color: #333;
+    }
+
+    .join-team-form {
+        text-align: left;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        color: #555;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        background-color: #3498db;
+        color: #fff;
+        padding: 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #2980b9;
+    }
+</style>
 
 {% endblock %}

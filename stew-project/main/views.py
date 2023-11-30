@@ -425,7 +425,7 @@ def viewtask(request, task_pk):
                 submissions = TaskSubmission.objects.filter(task=task)
             else:
                 #teams = Team.objects.filter(course=task.course, parent_team=None, members=request.user.id)
-                submissions = TaskSubmission.objects.filter(task=task, team__members=request.user)
+                submissions = TaskSubmission.objects.filter(task=task, team__members=request.user).union(TaskSubmission.objects.filter(task=task, submitter=request.user))
             return render(request, 'main/viewtask.html', {'task':task, 'submissions':submissions})
         else:
             return redirect('home')
