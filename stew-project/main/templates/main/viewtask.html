@@ -1,51 +1,126 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
 
-<h1>Task</h1>
+    .task-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-<h2>{{ error }}</h2>
+    h1 {
+        color: #333;
+    }
 
-<h2>{{ task.name }}</h2>
+    h2 {
+        color: #555;
+    }
 
-<p>{{ task.description }}</p>
+    h3 {
+        color: #777;
+    }
 
-{% if task.attached %}
-Attachment: <a href="{% url 'downloadtaskattachment' task.id %}" download>{{task.attached.name}}</a>
-{% endif %}
+    p {
+        margin: 10px 0;
+        line-height: 1.5;
+    }
 
-<br>
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
 
-{% if task.task_level == null and task.course.instructor.id == request.user.id %}
-<a href="{% url 'edittask' task.id %}">
-    Edit Task
-</a>
-{% endif %}
-{% if task.task_level != null %}
-<a href="{% url 'edittask' task.id %}">
-    Edit Task
-</a>
-{% endif %}
+    a:hover {
+        text-decoration: none;
+    }
 
-<h3>Task Submissions:</h3>
+    ul {
+        list-style: none;
+        padding: 0;
+    }
 
-<ul>
-    {% for submission in submissions.all %}
-    <li>
-        <a href="{% url 'viewsubmission' submission.id %}">
-            {% if submission.team %}
-            {{submission.team.name}}: {{submission.submitter.first_name}} {{submission.submitter.last_name}}
-            {% else %}
-            {{submission.submitter.first_name}} {{submission.submitter.last_name}}
-            {% endif %}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+    li {
+        margin-bottom: 10px;
+    }
 
-<a href="{% url 'addtasksubmission' task.id %}">
-    Add Submission
-</a>
+    .button-link {
+        display: inline-block;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: #fff;
+        background-color: #007bff;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
 
+    .button-link:hover {
+        background-color: #0056b3;
+    }
 
+    .attached {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .attached:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="task-container">
+    <h1>Task</h1>
+
+    <hr>
+
+    <h2>{{ error }}</h2>
+
+    <h2>{{ task.name }}</h2>
+
+    <p>{{ task.description }}</p>
+
+    {% if task.attached %}
+        Attachment: <a href="{% url 'downloadtaskattachment' task.id %} " class="attached" download>{{task.attached.name}}</a>
+    {% endif %}
+
+    <br>
+    <br>
+
+    {% if task.task_level == null and task.course.instructor.id == request.user.id %}
+        <a href="{% url 'edittask' task.id %}" class="button-link">Edit Task</a>
+    {% endif %}
+    {% if task.task_level != null %}
+        <a href="{% url 'edittask' task.id %}" class="button-link">Edit Task</a>
+    {% endif %}
+
+    <hr>
+
+    <h3>Task Submissions:</h3>
+
+    <ul>
+        {% for submission in submissions.all %}
+            <li>
+                <a href="{% url 'viewsubmission' submission.id %}">
+                    {% if submission.team %}
+                        {{submission.team.name}}: {{submission.submitter.first_name}} {{submission.submitter.last_name}}
+                    {% else %}
+                        {{submission.submitter.first_name}} {{submission.submitter.last_name}}
+                    {% endif %}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'addtasksubmission' task.id %}" class="button-link">Add Submission</a>
+</div>
 {% endblock %}

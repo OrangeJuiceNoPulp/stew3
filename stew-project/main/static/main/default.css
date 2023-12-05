@@ -43,7 +43,7 @@
 	
 	a
 	{
-		color: #ea0a85;
+		color: #6000f1;
 	}
 	
 	a:hover
@@ -66,7 +66,7 @@
 			form label
 			{
 				display: block;
-				text-align: left;
+				text-align: center;
 				margin-bottom: 0.5em;
 			}
 			
@@ -253,18 +253,18 @@
 		display: inline-block;
 		margin-top: 2em;
 		padding: 0.8em 2em;
-		background: #edb202;
+		background: #ddd;
 		line-height: 1.8em;
 		letter-spacing: 1px;
 		text-decoration: none;
 		font-size: 1em;
-		color: #FFF;
+		color: #333;
 	}
 	
 	.button:before
 	{
 		display: inline-block;
-		background: #ed0fbd;
+		background: #6000f1;
 		margin-right: 1em;
 		width: 40px;
 		height: 40px;
@@ -749,7 +749,7 @@
 	ul.tools li a:before
 	{
 		display: inline-block;
-		background: #1ABC9C;
+		background: #6000f1;
 		width: 120px;
 		height: 120px;
 		border-radius: 50%;

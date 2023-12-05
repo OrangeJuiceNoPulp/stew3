@@ -2,9 +2,13 @@
 
 {% block content %}
 
+<div class="container">
+
 <h1>Edit Comment</h1>
 
 <h2>{{ error }}</h2>
+
+<hr>
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -14,10 +18,14 @@
         <textarea name="content" cols="40" rows="10" maxlength="5000" id="id_content">{{comment.content}}</textarea>   
     </p>
     
+    <hr>
+
     <p>
-        <label for="id_attached">New Attachment:</label>
+        <label for="id_attached">New Attachment (Will Override Old Attachment):</label>
         <input type="file" name="attached" id="id_attached"> 
     </p>
+
+    <hr>
 
     <p>
         <label for="id_visible">Comment Visible:</label>
@@ -29,9 +37,76 @@
 
     </p>
 
+    <hr>
 
     <button type="submit">Save</button>
 </form>
+
+</div>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    .task-submission-title {
+        color: #007BFF;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        margin-top: 5px;
+    }
+
+    .save-button {
+        background-color: #007BFF;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .save-button:hover {
+        background-color: #0056b3;
+    }
+
+    a {
+        color: #007BFF;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
 
 
 

@@ -1,39 +1,108 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
+<div class="container">
+    <h1 class="submit-task-title">Submit Task</h1>
 
-<h1>Submit Task</h1>
+    <hr> 
 
-<h2>{{ error }}</h2>
+    <div class="error-message">
+        <h2>{{ error }}</h2>
+    </div>
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
+    <form method="POST" enctype="multipart/form-data" class="task-form">
+        {% csrf_token %}
 
-    <p>
-        <label for="id_description">Description:</label>
-        <textarea name="description" cols="40" rows="10" maxlength="5000" id="id_description"></textarea>   
-    </p>
-    
-    <p>
-        <label for="id_attached">Attachment:</label>
-        <input type="file" name="attached" id="id_attached"> 
-    </p>
+        <div class="form-group">
+            <label for="id_description">Description:</label>
+            <textarea name="description" cols="40" rows="10" maxlength="5000" id="id_description" required=""></textarea>
+        </div>
 
-    <p>
-        <label for="id_team">Submitting Team:</label>
+        <hr>
 
-        <select name="team" required="" id="id_team">
-            <option value="0" selected="selected">Myself</option>
-            {% for team in teams %}
-            <option value={{team.id}}>{{team.name}}</option>
-            {% endfor %}
+        <div class="form-group">
+            <label for="id_attached">Attachment:</label>
+            <input type="file" name="attached" id="id_attached">
+        </div>
 
-        </select>
-    </p>
+        <hr>
 
-    <button type="submit">Save</button>
-</form>
+        <div class="form-group">
+            <label for="id_team">Submitting Team:</label>
+            <select name="team" required="" id="id_team">
+                <option value="0" selected="selected">Myself</option>
+                {% for team in teams %}
+                    <option value="{{ team.id }}">{{ team.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
+        <button type="submit" class="save-button">Save</button>
+    </form>
+</div>
 
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    .submit-task-title {
+        color: #007BFF;
+    }
+
+    .error-message h2 {
+        color: #ff0000;
+    }
+
+    .task-form {
+        margin-top: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        margin-top: 5px;
+    }
+
+    .save-button {
+        background-color: #007BFF;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .save-button:hover {
+        background-color: #0056b3;
+    }
+</style>
 
 {% endblock %}

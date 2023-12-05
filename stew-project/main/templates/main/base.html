@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Page Title</title>
+    <title>STEW</title>
 
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            text-align: center;
         }
 
         .navbar {
@@ -18,7 +19,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px;
-            background-color: #f2f2f2;
+            background-color: #f4f4f4;
         }
 
         .button {
@@ -43,6 +44,7 @@
         .auth-links {
             display: flex;
         }
+
     </style>
 </head>
 
@@ -67,7 +69,7 @@
     <nav class="navbar">
         <a href="{% url 'home' %}" class="button">Home</a>
         <div class="auth-links">
-            <a href="{% url 'signupaccount' %}" class="button">Signup</a>
+            <a href="{% url 'signupaccount' %}" class="button">Sign Up</a>
             <a href="{% url 'loginaccount' %}" class="button">Login</a>
         </div>
     </nav>

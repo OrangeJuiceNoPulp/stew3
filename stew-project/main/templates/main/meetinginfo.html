@@ -1,44 +1,127 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
+<div class="container">
+    <div class="meeting-details">
+        <h1 class="meeting-title">Meeting Details</h1>
 
-<h1>Meeting</h1>
+        <h2> Meeting on {{ meeting.meeting_time }} </h2>
 
-<h2>Course: 
-    <a href="{% url 'coursehome' meeting.meeting_course.id %}">
-        {{meeting.meeting_course.name}}
-    </a>
-</h2>
+        <hr>
+        <div class="detail">
+            <h2>Course:</h2>
+            <p class="link">
+                <a href="{% url 'coursehome' meeting.meeting_course.id %}">
+                    {{ meeting.meeting_course.name }}
+                </a>
+            </p>
+        </div>
 
-{% if meeting.meeting_team %}
-<h3>Team: 
-    <a href="{% url 'teamhome' meeting.meeting_team.id %}">
-        {{meeting.meeting_team.name}}
-    </a>
-</h3>
-{% endif %}
+        {% if meeting.meeting_team %}
+            <div class="detail">
+                <h2>Team:</h2>
+                <p class="link">
+                    <a href="{% url 'teamhome' meeting.meeting_team.id %}">
+                        {{ meeting.meeting_team.name }}
+                    </a>
+                </p>
+            </div>
+        {% endif %}
 
-<h2>Meeting Host: 
-    <a href="{% url 'userprofile' meeting.meeting_host.id %}">
-        {{meeting.meeting_host.first_name}} {{meeting.meeting_host.last_name}}
-    </a>
-</h2>
+        <hr>
+        <div class="detail">
+            <h2>Meeting Host:</h2>
+            <p class="link">
+                <a href="{% url 'userprofile' meeting.meeting_host.id %}">
+                    {{ meeting.meeting_host.first_name }} {{ meeting.meeting_host.last_name }}
+                </a>
+            </p>
+        </div>
 
-<h2>Meeting Link: 
-    <a href="{{ meeting.link }}">
-        {{ meeting.link }}
-    </a>
-</h2>
+        <hr>
+        <div class="detail">
+            <h2>Meeting Link:</h2>
+            <p class="link">
+                <a href="{{ meeting.link }}">
+                    {{ meeting.link }}
+                </a>
+            </p>
+        </div>
 
-<h3>Memo:</h3> 
-    <p>
-        {{ meeting.memo }}
-    </p>
+        {% if meeting.memo %}
+        <hr>
+        <div class="detail">
+            <h3>Memo:</h3>
+            <p class="memo">
+                {{ meeting.memo }}
+            </p>
+        </div>
+        {% endif %}
 
-{% if request.user.id == meeting.meeting_host.id %}
-    <a href="{% url 'editmeeting' meeting.id %}">
-        Edit Meeting
-    </a>
-{% endif %}
+        {% if request.user.id == meeting.meeting_host.id %}
+            <hr>
+            <a class="edit-link" href="{% url 'editmeeting' meeting.id %}">
+                Edit Meeting
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    .meeting-title {
+        color: #333;
+    }
+
+    .detail {
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .link a {
+        color: #007BFF;
+        text-decoration: none;
+    }
+
+    .link a:hover {
+        text-decoration: underline;
+    }
+
+    .memo {
+        white-space: pre-line;
+    }
+
+    .edit-link {
+        display: inline-block;
+        margin-top: 10px;
+        color: #007BFF;
+        text-decoration: none;
+    }
+
+    .edit-link:hover {
+        text-decoration: underline;
+    }
+</style>
 
 {% endblock %}

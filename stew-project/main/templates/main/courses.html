@@ -13,6 +13,10 @@
         <a href="{% url 'joincourse' %}" class="btn btn-secondary">Join Course</a>
     </div>
 
+    
+    {%if enrolled_courses%}
+    <hr>
+
     <div class="mt-4">
         <h1>Enrolled Courses</h1>
         <ul class="list-group">
@@ -25,8 +29,12 @@
             {% endfor %}
         </ul>
     </div>
+    {% endif %}
 
     {% if is_teacher %}
+    {%if taught_courses%}
+    <hr>
+
         <div class="mt-4">
             <h1>Taught Courses</h1>
             <ul class="list-group">
@@ -39,6 +47,7 @@
                 {% endfor %}
             </ul>
         </div>
+    {% endif %}
     {% endif %}
 </div>
 
@@ -72,11 +81,15 @@
         margin-top: 10px;
     }
 
-    li.list-group-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    ul {
+        list-style: none;
+        padding: 0;
     }
+
+    li {
+        margin-bottom: 8px;
+    }
+    
 </style>
 
 {% endblock %}

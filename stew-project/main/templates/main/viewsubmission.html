@@ -1,125 +1,186 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
 
-<h1>Task Submission</h1>
+    .task-submission {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-{% if submission.team %}
-<h2>Team: {{submission.team.name}} </h2>
-{% endif %}
+    h1 {
+        color: #333;
+    }
 
-<h3>Submitted by: {{submission.submitter.first_name}} {{submission.submitter.last_name}}</h3>
+    h2 {
+        color: #555;
+    }
 
-<p>Submitted on {{submission.submission_time|date:'M j, Y'}} at {{submission.submission_time|date:'H:i'}}</p>
+    h3, h4 {
+        color: #777;
+    }
 
-<p>{{ submission.description }}</p>
+    p {
+        margin: 10px 0;
+        line-height: 1.5;
+    }
 
-<br>
+    .button-link {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 10px 0;
+        text-decoration: none;
+        color: #fff;
+        background-color: #007bff;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
 
-{% if submission.attached %}
-Attachment: <a href="{% url 'downloadsubmissionattachment' submission.id %}" download>{{submission.attached.name}}</a>
-{% endif %}
+    .button-link:hover {
+        background-color: #0056b3;
+    }
 
-{% if submission.is_graded %}
+    .graded-section {
+        background-color: #e6f7ff;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
 
-    {% if submission.grade_visible %}
-        <p>
-        This submission is graded and the grader has chosen to make the grade visible to you.
-        </p>
-    {% else %}
-        <p>
-        This submission is graded, but the grader has marked the grade as invisible.
-        </p>
-    {% endif %}
+    .comment-list {
+        list-style: none;
+        padding: 0;
+    }
 
-    {% if submission.grade_visible or can_grade %}
-        <p>
-        Grade: {{submission.grade}}
-        </p>
-        <p>
-        Grader: {{submission.grader.first_name}} {{submission.grader.last_name}}
-        </p>
-        <p>
-        Grading Comments: {{submission.grading_comments}}
-        </p>
+    .comment {
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #f2f2f2;
+        border-radius: 5px;
+    }
 
-        {% if submission.grading_attached %}
-            <p>
-            Attachment: <a href="{% url 'downloadgradingattachment' submission.id %}" download>{{submission.grading_attached.name}}</a>
-            </p>
-        {% endif %}
+    .invisible-comment {
+        opacity: 0.7;
+    }
 
-        
-    {% endif %}
+    .attached {
+        color: #007bff;
+        text-decoration: none;
+    }
 
-{% else %}
-<p>
-    <a href="{% url 'editsubmission' submission.id %}" >Edit Submission</a>
-</p>
-{% endif %}
+    .attached:hover {
+        text-decoration: underline;
+    }
+</style>
+<div class="container">
+<div class="task-submission">
+    <h1>Task Submission</h1>
 
-{% if can_grade %}
-<p>
-    <a href="{% url 'gradesubmission' submission.id %}" >Grade Submission</a>
-</p>
-{% endif %}
+    <hr>
 
-<h2>Comments</h2>
-
-
-<ul>
-    {% for comment in comments.all %}
-
-        {% if comment.visible %}
-
-            <li>
-                <h4>{{comment.commenter.first_name}} {{comment.commenter.last_name}}</h4>
-                {% if comment.attached %}
-                <p>
-                    Attachment: <a href="{% url 'downloadcommentattachment' comment.id %}" download>{{comment.attached.name}}</a>
-                </p>
-                {% endif %}
-        
-                <p>{{comment.content}}</p>
-                <p>Modified on {{comment.modified|date:'M j, Y'}} at {{comment.modified|date:'H:i'}}</p>
-        
-                {% if request.user == comment.commenter %}
-                    <a href="{% url 'editcomment' comment.id %}">
-                        Edit Comment
-                    </a>     
-                {% endif %}
-            </li>
-
-        {% elif request.user == comment.commenter %}
-
-            <li>
-                <h4>{{comment.commenter.first_name}} {{comment.commenter.last_name}}</h4>
-                {% if comment.attached %}
-                <p>
-                    Attachment: <a href="{% url 'downloadcommentattachment' comment.id %}" download>{{comment.attached.name}}</a>
-                </p>
-                {% endif %}
-        
-                <p>{{comment.content}}</p>
-                <p>Modified on {{comment.modified|date:'M j, Y'}} at {{comment.modified|date:'H:i'}}</p>
-
-                <h4>This comment is marked as invisible to other users.</h4>
-        
-                {% if request.user == comment.commenter %}
-                    <a href="{% url 'editcomment' comment.id %}">
-                        Edit Comment
-                    </a>     
-                {% endif %}
-            </li>
-
-        {% endif %}
+    <h2>Task: 
+        <a href="{% url 'viewtask' submission.task.id %}">
+        {{ submission.task.name }}
+        </a> 
+    </h2>
     
-    {% endfor %}
-</ul>
+    <hr>
 
-<a href="{% url 'commentsubmission' submission.id %}">
-    Post Comment
-</a>    
+    {% if submission.team %}
+        <h2>Team: {{submission.team.name}}</h2>
+    {% endif %}
 
+    <h3>Submitted by: {{submission.submitter.first_name}} {{submission.submitter.last_name}}</h3>
+
+    <p>Submitted on {{submission.submission_time|date:'M j, Y'}} at {{submission.submission_time|date:'H:i'}}</p>
+
+    <p>{{ submission.description }}</p>
+
+    <br>
+
+    {% if submission.attached %}
+        Attachment: <a href="{% url 'downloadsubmissionattachment' submission.id %}" class="attached" download>{{submission.attached.name}}</a>
+    {% endif %}
+
+    
+
+    {% if submission.is_graded %}
+    <hr>
+        {% if submission.grade_visible %}
+            <p>This submission is graded, and the grade is visible to you.</p>
+        {% else %}
+            <p>This submission is graded, but the grade is marked as invisible.</p>
+        {% endif %}
+
+        {% if submission.grade_visible or can_grade %}
+            <div class="graded-section">
+                <p>Grade: {{submission.grade}}</p>
+                <p>Grader: {{submission.grader.first_name}} {{submission.grader.last_name}}</p>
+                <p>Grading Comments: {{submission.grading_comments}}</p>
+
+                {% if submission.grading_attached %}
+                    <p>Attachment: <a href="{% url 'downloadgradingattachment' submission.id %}" class="attached" download>{{submission.grading_attached.name}}</a></p>
+                {% endif %}
+            </div>
+        {% endif %}
+
+    {% else %}
+        <p><a href="{% url 'editsubmission' submission.id %}" class="button-link">Edit Submission</a></p>
+    {% endif %}
+
+    {% if can_grade %}
+    <hr>
+        <p><a href="{% url 'gradesubmission' submission.id %}" class="button-link">Grade Submission</a></p>
+    {% endif %}
+
+    <hr>
+
+    <h2>Comments</h2>
+
+    <ul class="comment-list">
+        {% for comment in comments.all %}
+            {% if comment.visible %}
+                <li class="comment">
+                    <h4>{{comment.commenter.first_name}} {{comment.commenter.last_name}}</h4>
+                    {% if comment.attached %}
+                        <p>Attachment: <a href="{% url 'downloadcommentattachment' comment.id %}" class="attached" download>{{comment.attached.name}}</a></p>
+                    {% endif %}
+                    <p>{{comment.content}}</p>
+                    <p>Modified on {{comment.modified|date:'M j, Y'}} at {{comment.modified|date:'H:i'}}</p>
+                    {% if request.user == comment.commenter %}
+                        <a href="{% url 'editcomment' comment.id %}" class="button-link">Edit Comment</a>
+                    {% endif %}
+                </li>
+            {% elif request.user == comment.commenter %}
+                <li class="comment invisible-comment">
+                    <h4>{{comment.commenter.first_name}} {{comment.commenter.last_name}}</h4>
+                    {% if comment.attached %}
+                        <p>Attachment: <a href="{% url 'downloadcommentattachment' comment.id %}" class="attached" download>{{comment.attached.name}}</a></p>
+                    {% endif %}
+                    <p>{{comment.content}}</p>
+                    <p>Modified on {{comment.modified|date:'M j, Y'}} at {{comment.modified|date:'H:i'}}</p>
+                    <h4>This comment is marked as invisible to other users.</h4>
+                    {% if request.user == comment.commenter %}
+                        <a href="{% url 'editcomment' comment.id %}" class="button-link">Edit Comment</a>
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'commentsubmission' submission.id %}" class="button-link">Post Comment</a>
+</div>
+</div>
 
 {% endblock %}

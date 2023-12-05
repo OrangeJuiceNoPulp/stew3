@@ -41,6 +41,10 @@
     </div>
 
     <hr>
+{% elif user.id == course.instructor.id %}
+    <h3>Teaching Assistants</h3>
+    <a href="{% url 'addteachingassistant' course.id %}">Add Teaching Assistant</a>
+    <hr>
 {% endif %}
 
 
@@ -61,6 +65,8 @@
         <input type="hidden" name="display_completed_meetings" value="{% if completed_meetings %}False{% else %}True{% endif %}">
         <input type="submit" value="{% if completed_meetings %}Hide Completed Meetings{% else %}Display Completed Meetings{% endif %}">
     </form>
+
+    <br>
 
     {% if user.id == course.instructor.id %}
         <a href="{% url 'addmeeting' course.id 0 %}">Add Meeting</a>
