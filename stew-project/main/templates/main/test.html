@@ -3,14 +3,62 @@
 {% block content %}
 
 <div class="container">
+<h1>Grades</h1>
+<hr>
+<h2>Course: <a href="#" class="special2">History of Ice Cream Trucks ICE-3110</h2>
 
-<form method="POST">
-    {% csrf_token %}
+    <ul class="comment-list">
+        <li class="comment">
+            <h3>Homework 1</h3>
+            <p class="special">Class Average: 72.6</p>
+            <label for="id_username" class="special">Contribution to Course:</label>
+            <input type="text" name="username" autofocus autocapitalize="none" value="5.0" maxlength="150" required id="id_username">
+        </li>
+        <li class="comment">
+            <h3>Homework 2</h3>
+            <p class="special">Class Average: 78.2</p>
+            <label for="id_username" class="special">Contribution to Course:</label>
+            <input type="text" name="username" autofocus autocapitalize="none" value="10.0" maxlength="150" required id="id_username">
+        </li>
+        <li class="comment">
+            <h3>Homework 3</h3>
+            <p class="special">Class Average: 75.3</p>
+            <label for="id_username" class="special">Contribution to Course:</label>
+            <input type="text" name="username" autofocus autocapitalize="none" value="5.0" maxlength="150" required id="id_username">
+        </li>
+        <li class="comment">
+            <h3>Midterm Exam 1</h3>
+            <p class="special">Class Average: 70.2</p>
+            <label for="id_username" class="special">Contribution to Course:</label>
+            <input type="text" name="username" autofocus autocapitalize="none" value="20.0" maxlength="150" required id="id_username">
+        </li>
+        <li class="comment">
+            <h3>Midterm Exam 2</h3>
+            <p class="special">Class Average: 71.4</p>
+            <label for="id_username" class="special">Contribution to Course:</label>
+            <input type="text" name="username" autofocus autocapitalize="none" value="20.0" maxlength="150" required id="id_username">
+        </li>
+        <li class="comment">
+            <h3>Group Presentation</h3>
+            <p class="special">Class Average: 68.8</p>
+            <label for="id_username" class="special">Contribution to Course:</label>
+            <input type="text" name="username" autofocus autocapitalize="none" value="10.0" maxlength="150" required id="id_username">
+        </li>
+        <li class="comment">
+            <h3>Final Exam</h3>
+            <p class="special">Class Average: 73.7</p>
+            <label for="id_username" class="special">Contribution to Course:</label>
+            <input type="text" name="username" autofocus autocapitalize="none" value="30.0" maxlength="150" required id="id_username">
+        </li>
+        
 
-    {{ form.as_p }}
 
-    <button type="submit">Create</button>
-</form>
+    </ul>
+    <hr>
+
+    <a href="#" class="button-link">Save Changes</a>
+   
+
 
 </div>
 
@@ -18,7 +66,7 @@
     body {
         font-family: 'Arial', sans-serif;
         background-color: #f4f4f4;
-        color: #333;
+        text-align: center;
         margin: 0;
         padding: 0;
     }
@@ -33,48 +81,121 @@
         margin-top: 20px;
     }
 
-    .task-submission-title {
-        color: #007BFF;
+    .task-submission {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    .form-group {
-        margin-bottom: 20px;
+    h1 {
+        color: #333;
     }
 
-    label {
-        display: block;
-        margin-bottom: 5px;
+    h2 {
         color: #555;
     }
 
-    input,
-    textarea {
-        width: 100%;
-        padding: 8px;
-        box-sizing: border-box;
-        margin-top: 5px;
+    h3, h4 {
+        color: #777;
     }
 
-    .save-button {
-        background-color: #007BFF;
+    p {
+        margin: 8px 0;
+        line-height: 1.5;
+    }
+
+    .button-link {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 10px 0;
+        text-decoration: none;
         color: #fff;
-        padding: 10px;
-        border: none;
+        background-color: #007bff;
         border-radius: 5px;
-        cursor: pointer;
+        transition: background-color 0.3s;
     }
 
-    .save-button:hover {
+    .button-link:hover {
         background-color: #0056b3;
     }
 
+    .graded-section {
+        background-color: #e6f7ff;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .comment-list {
+        list-style: none;
+        padding: 0;
+        overflow-y:scroll;
+        height: 800px;
+    }
+
+    .comment {
+        margin-bottom: 5px;
+        padding: 0px;
+        background-color: #f2f2f2;
+        border-radius: 5px;
+    }
+
+    .invisible-comment {
+        opacity: 0.7;
+    }
+
+    .attached {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .attached:hover {
+        text-decoration: underline;
+    }
+
     a {
-        color: #007BFF;
+        color: #000;
         text-decoration: none;
     }
 
     a:hover {
         text-decoration: underline;
+    }
+
+    .special {
+        color: #000;
+        text-decoration: none;
+    }
+    .special:hover {
+        text-decoration: none;
+    }
+
+    .special2 {
+        color: #007BFF;
+        text-decoration: none;
+    }
+    .special2:hover {
+        text-decoration: none;
+    }
+
+    .comment special {
+        color: #000;
+        text-decoration: none;
+    }
+    .comment special:hover {
+        text-decoration: none;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
     }
 </style>
 

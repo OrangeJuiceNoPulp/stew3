@@ -358,7 +358,7 @@ def editmeeting(request, meeting_pk):
             try:
                 meeting.meeting_time = request.POST['meeting_time']
                 meeting.memo = request.POST['memo']
-                meeting.link = request.POST['meeting_time']
+                meeting.link = request.POST['link']
                 meeting.is_complete = request.POST['is_complete']
                 meeting.save()
                 return redirect('meetinginfo', meeting_pk)
