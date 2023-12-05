@@ -4,23 +4,66 @@
 
 <h2>{{ error }}</h2>
 
-{% if userprofile.profile_picture %}
-<img src="{{userprofile.profile_picture.url}}">
-{% endif %}
+<div class="container">
+    {% if userprofile.profile_picture %}
+    <img src="{{userprofile.profile_picture.url}}" width="250" height="250">
+    {% endif %}
 
-<h1>{{ userprofile.first_name }} {{ userprofile.last_name }}</h1>
+    <h1>{{ userprofile.first_name }} {{ userprofile.last_name }}</h1>
 
-<h2>Email: {{ userprofile.email }}</h2>
+    <h2>Email: {{ userprofile.email }}</h2>
 
-<h3>About Me:</h3>
-<p>{{ userprofile.description }}</p>
+    {% if userprofile.description %}
+        <hr>
 
+        <h3>About Me:</h3>
+        <p>{{ userprofile.description }}</p>
+    {% endif %}
 
-{% if request.user == userprofile %}
-    <a href="{% url 'edituserprofile'  userprofile.id %}">
-        Edit Profile
-    </a>    
-{% endif %}
+    {% if request.user == userprofile %}
+        <a href="{% url 'edituserprofile'  userprofile.id %}">
+            Edit Profile
+        </a>    
+    {% endif %}
+</div>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2 {
+        color: #333;
+    }
+
+    a.btn {
+        margin-right: 10px;
+    }
+
+    ul.list-group {
+        margin-top: 10px;
+    }
+
+    li.list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+</style>
+
 
 
 {% endblock %}

@@ -2,23 +2,86 @@
 
 {% block content %}
 
-<h1> Create Team </h1>
+<div class="container">
+    <h1 class="mb-4">Create Team</h1>
 
-<h2>{{ error }}</h2>
+    <div class="alert alert-danger" role="alert">
+        <h2>{{ error }}</h2>
+    </div>
 
-<form method="POST">
-    {% csrf_token %}
+    <form method="POST">
+        {% csrf_token %}
 
-<p>
-    <label for="id_teamname">Team Name:</label>
-    <input type="text" name="name" autofocus autocapitalize="none" autocomplete="team name" maxlength="100" required id="id_teamname">
-</p>
-<p>
-    <label for="id_teamcode">Team Code:</label>
-    <input type="text" name="join_code" maxlength="100" required id="id_teamcode">
-</p>
+        <div class="form-group">
+            <label for="id_teamname">Team Name:</label>
+            <input type="text" name="name" autofocus autocapitalize="none" autocomplete="team name" maxlength="100" required id="id_teamname" class="form-control">
+        </div>
 
-<button type="submit">Create</button>
-</form>
+        <div class="form-group">
+            <label for="id_teamcode">Team Code:</label>
+            <input type="text" name="join_code" maxlength="100" required id="id_teamcode" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+</div>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 400px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2 {
+        color: #333;
+    }
+
+    .alert {
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        color: #555;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        background-color: #3498db;
+        color: #fff;
+        padding: 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #2980b9;
+    }
+</style>
 
 {% endblock %}

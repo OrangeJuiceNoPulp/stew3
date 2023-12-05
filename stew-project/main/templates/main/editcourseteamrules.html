@@ -2,27 +2,84 @@
 
 {% block content %}
 
-<h1> Allow Students To Create Teams?</h1>
+<div class="container">
+    <h1 class="mb-4">Allow Students To Create Teams?</h1>
 
-<h2>{{ error }}</h2>
+    <div class="alert alert-danger" role="alert">
+        <h2>{{ error }}</h2>
+    </div>
 
-<form method="POST">
-    {% csrf_token %}
+    <form method="POST">
+        {% csrf_token %}
 
-<p>
-    <label for="id_students_can_make_teams">Students are allowed to create teams:</label>
+        <div class="form-group">
+            <label for="id_students_can_make_teams" class="form-check-label">Students are allowed to create teams:</label>
 
-    {% if course.students_can_make_teams %}
-        <input type="checkbox" name="students_can_make_teams" checked="True" id="id_students_can_make_teams">
-    {% else %}
-        <input type="checkbox" name="students_can_make_teams" id="id_students_can_make_teams">
-    {% endif %}  
+            <div class="form-check">
+                {% if course.students_can_make_teams %}
+                    <input type="checkbox" name="students_can_make_teams" checked="True" id="id_students_can_make_teams" class="form-check-input">
+                {% else %}
+                    <input type="checkbox" name="students_can_make_teams" id="id_students_can_make_teams" class="form-check-input">
+                {% endif %}
+            </div>
+        </div>
 
-</p>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
 
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
 
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-<button type="submit">Confirm</button>
-</form>
+    h1, h2 {
+        color: #333;
+    }
+
+    .alert {
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-check-label {
+        display: block;
+        margin-bottom: 8px;
+        color: #555;
+    }
+
+    .form-check-input {
+        margin-top: 0;
+    }
+
+    button {
+        background-color: #3498db;
+        color: #fff;
+        padding: 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #2980b9;
+    }
+</style>
 
 {% endblock %}

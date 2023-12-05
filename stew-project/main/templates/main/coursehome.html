@@ -2,127 +2,183 @@
 
 {% block content %}
 
-<h2>{{ error }}</h2>
+<div class="container">
 
-<h1>{{ course.name }}</h1>
+<div class="course-header">
+    <h1>{{ course.name }}</h1>
 
-{% if user.id == course.instructor.id %}
-<h3>Course Code: {{course.join_code}} </h3>
-<p>Tell this code to your students so that they can join.</p>
-{% endif %}
-
-<h2>Instructor: 
-    <a href="{% url 'userprofile' course.instructor.id %}">
-    {{course.instructor.first_name}} {{course.instructor.last_name}}
-    </a>
-</h2>
-
-<br>
-
-
-{% if tas %}
-<h3>Teaching Assistants</h3>
-
-<ul>
-    {% for ta in tas %}
-    <li>
-        <a href="{% url 'userprofile' ta.id %}">
-            {{ta.first_name}} {{ta.last_name}}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
-{% endif %}
-
-{% if user.id == course.instructor.id %}
-<a href="{% url 'addteachingassistant' course.id %}">
-    Add Teaching Assistant
-</a>
-<br>
-<a href="{% url 'removeteachingassistant' course.id %}">
-    Remove Teaching Assistant
-</a>
-{% endif %}
-
-
-<h3>Meetings</h3>
-
-<ul>
-    {% for meeting in meetings.all %}
-    <li>
-        <a href="{% url 'meetinginfo' meeting.id %}">
-            Meeting on {{meeting.meeting_time}}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
-
-{% if completed_meetings %}
-<form action="{% url 'coursehome' course.id %}">
-    <input type="hidden" name="display_completed_meetings" value="False">
-    <input type="submit" value="Hide Completed Meetings">
-</form>
-{% else %}
-<form action="{% url 'coursehome' course.id %}">
-    <input type="hidden" name="display_completed_meetings" value="True">
-    <input type="submit" value="Display Completed Meetings">
-</form>
-{% endif %}
-
-{% if user.id == course.instructor.id %}
-<a href="{% url 'addmeeting' course.id 0 %}">Add Meeting</a>
-{% endif %}
-
-
-<h3>Tasks</h3>
-
-<ul>
-    {% for task in tasks.all %}
-    <li>
-        <a href="{% url 'viewtask' task.id %}">
-            {{task.name}}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
-
-{% if user.id == course.instructor.id %}
-<a href="{% url 'assigntask' course.id 0 %}">Assign Task</a>
-{% endif %}
-
-<h3>Teams</h3>
-
-<ul>
-    {% for team in teams.all %}
-    <li>
-        <a href="{% url 'teamhome' team.id %}">
-            {{team.name}}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
-
-{% if course.students_can_make_teams or user.id == course.instructor.id %}
-<a href="{% url 'createteam' course.id 0 %}">Create Team</a> 
-<br>
-{% endif %}
-
-<a href="{% url 'jointeam' %}">Join Team</a>
-
-
-<br>
-
-{% if user.id == course.instructor.id %}
-    {% if course.students_can_make_teams %}
-        <a href="{% url 'editcourseteamrules' course.id %}">Disallow Students' Creation of Teams</a> 
-    {% else %}
-        <a href="{% url 'editcourseteamrules' course.id %}">Allow Students' Creation of Teams</a> 
+    {% if user.id == course.instructor.id %}
+        <h3>Course Code: {{ course.join_code }} </h3>
+        <p>Tell this code to your students so that they can join.</p>
     {% endif %}
 
+    <h2>Instructor:
+        <a href="{% url 'userprofile' course.instructor.id %}">
+            {{ course.instructor.first_name }} {{ course.instructor.last_name }}
+        </a>
+    </h2>
+</div>
+
+<hr>
+
+{% if tas %}
+    <div class="tas-section">
+        <h3>Teaching Assistants</h3>
+        <ul>
+            {% for ta in tas %}
+                <li>
+                    <a href="{% url 'userprofile' ta.id %}">
+                        {{ ta.first_name }} {{ ta.last_name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        {% if user.id == course.instructor.id %}
+            <a href="{% url 'addteachingassistant' course.id %}">Add Teaching Assistant</a>
+            <br>
+            <a href="{% url 'removeteachingassistant' course.id %}">Remove Teaching Assistant</a>
+        {% endif %}
+    </div>
+
+    <hr>
 {% endif %}
 
 
 
+<div class="meetings-section">
+    <h3>Meetings</h3>
+    <ul>
+        {% for meeting in meetings.all %}
+            <li>
+                <a href="{% url 'meetinginfo' meeting.id %}">
+                    Meeting on {{ meeting.meeting_time }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <form action="{% url 'coursehome' course.id %}">
+        <input type="hidden" name="display_completed_meetings" value="{% if completed_meetings %}False{% else %}True{% endif %}">
+        <input type="submit" value="{% if completed_meetings %}Hide Completed Meetings{% else %}Display Completed Meetings{% endif %}">
+    </form>
+
+    {% if user.id == course.instructor.id %}
+        <a href="{% url 'addmeeting' course.id 0 %}">Add Meeting</a>
+    {% endif %}
+</div>
+
+<hr>
+
+<div class="tasks-section">
+    <h3>Tasks</h3>
+    <ul>
+        {% for task in tasks.all %}
+            <li>
+                <a href="{% url 'viewtask' task.id %}">
+                    {{ task.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% if user.id == course.instructor.id %}
+        <a href="{% url 'assigntask' course.id 0 %}">Assign Task</a>
+    {% endif %}
+</div>
+
+<hr>
+
+<div class="teams-section">
+    <h3>Teams</h3>
+    <ul>
+        {% for team in teams.all %}
+            <li>
+                <a href="{% url 'teamhome' team.id %}">
+                    {{ team.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% if course.students_can_make_teams or user.id == course.instructor.id %}
+        <a href="{% url 'createteam' course.id 0 %}">Create Team</a>
+        <br>
+    {% endif %}
+
+    <a href="{% url 'jointeam' %}">Join Team</a>
+
+    <br>
+
+    {% if user.id == course.instructor.id %}
+        {% if course.students_can_make_teams %}
+            <a href="{% url 'editcourseteamrules' course.id %}">Disallow Students' Creation of Teams</a>
+        {% else %}
+            <a href="{% url 'editcourseteamrules' course.id %}">Allow Students' Creation of Teams</a>
+        {% endif %}
+    {% endif %}
+</div>
+
+<hr>
+
+<div class="students-section">
+    <h3>Students</h3>
+    <ul>
+        {% for student in students.all %}
+            <li>
+                <a href="{% url 'userprofile' student.id %}">
+                    {{ student.first_name }} {{ student.last_name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+</div>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2, h3 {
+        color: #333;
+    }
+
+    .text-primary {
+        color: #007bff;
+    }
+
+    .text-danger {
+        color: #dc3545;
+    }
+
+    .btn {
+        margin-right: 10px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 8px;
+    }
+</style>
 
 
 {% endblock %}

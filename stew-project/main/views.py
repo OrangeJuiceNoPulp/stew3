@@ -132,20 +132,20 @@ def coursehome(request, course_pk):
     # else:
     #     print('User is not the instructor')
     
-    
+    students = CustomUser.objects.filter(courses=course, enrollment__enrolled_as_ta=False).order_by('last_name')
     
     if (course.instructor.id == request.user.id):
         teams = Team.objects.filter(course=course, parent_team=None)
         if request.method == 'GET':
-            return render(request, 'main/coursehome.html', {'course':course, 'tas':tas, 'teams':teams, 'meetings':meetings, 'completed_meetings':completed_meetings, 'tasks':tasks})
+            return render(request, 'main/coursehome.html', {'course':course, 'tas':tas, 'students':students, 'teams':teams, 'meetings':meetings, 'completed_meetings':completed_meetings, 'tasks':tasks})
     elif (course.students.filter(pk=request.user.id)):
         teams = Team.objects.filter(course=course, parent_team=None, members=request.user)
         if request.method == 'GET':
-            return render(request, 'main/coursehome.html', {'course':course, 'tas':tas, 'teams':teams, 'meetings':meetings, 'completed_meetings':completed_meetings, 'tasks':tasks})
+            return render(request, 'main/coursehome.html', {'course':course, 'tas':tas, 'students':students, 'teams':teams, 'meetings':meetings, 'completed_meetings':completed_meetings, 'tasks':tasks})
     elif (request.user.status == 'admin'):
         teams = Team.objects.filter(course=course, parent_team=None)
         if request.method == 'GET':
-            return render(request, 'main/coursehome.html', {'course':course, 'tas':tas, 'teams':teams, 'meetings':meetings, 'completed_meetings':completed_meetings, 'tasks':tasks})
+            return render(request, 'main/coursehome.html', {'course':course, 'tas':tas, 'students':students, 'teams':teams, 'meetings':meetings, 'completed_meetings':completed_meetings, 'tasks':tasks})
     else:
         return redirect('courses')
         

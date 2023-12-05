@@ -2,44 +2,81 @@
 
 {% block content %}
 
-Courses
+<div class="container">
+    <h2>Courses</h2>
 
-{% if is_teacher %}
-<a href="{% url 'createcourse' %}">Create Course</a>
-{% endif %}
+    {% if is_teacher %}
+        <a href="{% url 'createcourse' %}" class="btn btn-primary">Create Course</a>
+    {% endif %}
 
-<br>
+    <div class="mt-3">
+        <a href="{% url 'joincourse' %}" class="btn btn-secondary">Join Course</a>
+    </div>
 
-<a href="{% url 'joincourse' %}">Join Course</a>
+    <div class="mt-4">
+        <h1>Enrolled Courses</h1>
+        <ul class="list-group">
+            {% for course in enrolled_courses %}
+                <li class="list-group-item">
+                    <a href="{% url 'coursehome' course.id %}">
+                        {{ course.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 
-<br>
+    {% if is_teacher %}
+        <div class="mt-4">
+            <h1>Taught Courses</h1>
+            <ul class="list-group">
+                {% for course in taught_courses %}
+                    <li class="list-group-item">
+                        <a href="{% url 'coursehome' course.id %}">
+                            {{ course.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
 
-<h1>Enrolled Courses</h1>
-<ul>
-    {% for course in enrolled_courses %}
-    <li>
-        <a href="{% url 'coursehome' course.id %}">
-            {{course.name}}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
 
-<br>
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-{% if is_teacher %}
+    h1, h2 {
+        color: #333;
+    }
 
-<h1>Taught Courses</h1>
-<ul>
-    {% for course in taught_courses %}
-    <li>
-        <a href="{% url 'coursehome' course.id %}">
-            {{course.name}}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+    a.btn {
+        margin-right: 10px;
+    }
 
-{% endif %}
+    ul.list-group {
+        margin-top: 10px;
+    }
+
+    li.list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+</style>
 
 {% endblock %}

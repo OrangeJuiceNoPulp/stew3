@@ -1,26 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
 
-{% if user.is_authenticated %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Page Title</title>
 
-Logged in as {{ user.username }}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-<a href="{% url 'home' %}">Home</a>
-<a href="{% url 'courses' %}">Courses</a>
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f2f2f2;
+        }
 
-<form action="{% url 'logoutaccount' %}" method="POST">
-    {% csrf_token %}
-    <button type="submit">Logout</button>
-</form>
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-right: 10px;
+            text-decoration: none;
+            color: #333;
+            background-color: #ddd;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
 
+        .button:hover {
+            background-color: #bbb;
+        }
 
-{% else %}
+        .user-info {
+            margin-bottom: 10px;
+        }
 
-<a href="{% url 'home' %}">Home</a>
-<a href="{% url 'signupaccount' %}">Signup</a>
-<a href="{% url 'loginaccount' %}">Login</a>
+        .auth-links {
+            display: flex;
+        }
+    </style>
+</head>
 
-{% endif %}
+<body>
 
-<br>
-<br>
+    {% if user.is_authenticated %}
+    <div class="user-info">
+        Logged in as {{ user.username }}
+    </div>
 
-{% block content %} {% endblock %}
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="button">Home</a>
+        <a href="{% url 'courses' %}" class="button">Courses</a>
+
+        <form action="{% url 'logoutaccount' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="button">Logout</button>
+        </form>
+    </nav>
+
+    {% else %}
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="button">Home</a>
+        <div class="auth-links">
+            <a href="{% url 'signupaccount' %}" class="button">Signup</a>
+            <a href="{% url 'loginaccount' %}" class="button">Login</a>
+        </div>
+    </nav>
+    {% endif %}
+
+    <br>
+    <br>
+
+    {% block content %} {% endblock %}
+
+</body>
+
+</html>

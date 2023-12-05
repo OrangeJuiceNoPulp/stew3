@@ -2,29 +2,101 @@
 
 {% block content %}
 
-<h1> Create Course </h1>
+<div class="container">
+    <h1 class="mb-4">Create Course</h1>
 
-<h2>{{ error }}</h2>
+    <div class="alert alert-danger" role="alert">
+        <h2>{{ error }}</h2>
+    </div>
 
-<form method="POST">
-    {% csrf_token %}
+    <form method="POST">
+        {% csrf_token %}
 
-<p>
-    <label for="id_coursename">Course Name:</label>
-    <input type="text" name="name" autofocus autocapitalize="none" autocomplete="course name" maxlength="100" required id="id_coursename">
-</p>
-<p>
-    <label for="id_coursecode">Course Code:</label>
-    <input type="text" name="join_code" maxlength="100" required id="id_coursecode">
-</p>
+        <div class="form-group">
+            <label for="id_coursename">Course Name:</label>
+            <input type="text" name="name" autofocus autocapitalize="none" autocomplete="course name" maxlength="100" required id="id_coursename" class="form-control">
+        </div>
 
-<p>
-    <label for="id_students_can_make_teams">Students are allowed to create Teams:</label>
-    <input type="checkbox" name="students_can_make_teams" id="id_students_can_make_teams">
+        <div class="form-group">
+            <label for="id_coursecode">Course Code:</label>
+            <input type="text" name="join_code" maxlength="100" required id="id_coursecode" class="form-control">
+        </div>
 
-</p>
+        <div class="form-group">
+            <label for="id_students_can_make_teams" class="form-check-label">Students are allowed to create Teams:</label>
+            <div class="form-check">
+                <input type="checkbox" name="students_can_make_teams" id="id_students_can_make_teams" class="form-check-input">
+            </div>
+        </div>
 
-<button type="submit">Create</button>
-</form>
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+</div>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 400px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2 {
+        color: #333;
+    }
+
+    .alert {
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        color: #555;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .form-check-label {
+        margin-bottom: 8px;
+    }
+
+    .form-check-input {
+        margin-top: 0;
+    }
+
+    button {
+        background-color: #3498db;
+        color: #fff;
+        padding: 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #2980b9;
+    }
+</style>
 
 {% endblock %}
