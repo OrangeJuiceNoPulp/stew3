@@ -1,17 +1,38 @@
 # stew3
 STEW Website Project
+
+
 CSI-3340 Software Engineering
 
+
+
 References
+
+
 https://www.packtpub.com/product/django-3-full-stack-websites-with-python-web-development-video/9781801818148
+
+
+
 https://github.com/PacktPublishing/Django-3-Full-Stack-Websites-with-Python-Web-Development
 
 https://code.visualstudio.com/docs/python/python-tutorial
+
+
 https://stackoverflow.com/questions/46158714/include-is-not-defined
+
+
 https://docs.djangoproject.com/en/4.2/ref/models/fields/#model-field-types
+
+
 https://docs.djangoproject.com/en/4.2/topics/db/models/
+
+
 https://getbootstrap.com/docs/5.3/getting-started/introduction/
+
+
 https://docs.djangoproject.com/en/4.2/ref/templates/builtins/
+
+
 https://docs.djangoproject.com/en/4.2/topics/auth/customizing/
 https://www.youtube.com/watch?v=_tHabkMKh98 (Django Tutorial - Creating Custom User model in Django website #4 - YouTube)
 https://www.youtube.com/watch?v=q5oO9XB6Vrs (Django Tutorial - Creating Django user profile #12 - YouTube)
